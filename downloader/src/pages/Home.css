@@ -1,0 +1,328 @@
+h1 {
+    margin: 60px 0 0 0;
+    padding: 0;
+    font-size: 50px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.search-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 40px auto auto auto;
+    min-height: 70px;
+    width: 100%;
+    max-width: 930px;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.search-section input[type="url"] {
+    padding: 10px;
+    font-size: 16px;
+    height: 48px;
+    width: 100%;
+    color: var(--text-h);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-sizing: border-box;
+    padding-inline: 16px;
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.search-section input[type="url"]::placeholder {
+    color: #68748a;
+}
+
+.search-section input[type="url"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.search-section button {
+    padding: 10px 22px;
+    font-size: 16px;
+    height: 48px;
+    border: none;
+    border-radius: 9px;
+    color: #071411;
+    background: var(--accent);
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.search-section .paste-button {
+    flex: 0 0 48px;
+    width: 48px;
+    padding: 0;
+    color: var(--text);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+}
+
+.paste-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.search-section .paste-button:hover:not(:disabled),
+.search-section .paste-button:focus-visible {
+    color: var(--accent-strong);
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+    outline: none;
+}
+
+.search-section button:hover:not(:disabled),
+.download-button:hover:not(:disabled) {
+    background: var(--accent-strong);
+    box-shadow: 0 8px 22px rgba(85, 214, 190, 0.2);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.results-section {
+    box-sizing: border-box;
+    margin: 26px auto 0;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 22px;
+    width: min(100% - 48px, 1050px);
+}
+
+.thumbnail-section {
+    box-sizing: border-box;
+    width: 30%;
+    min-height: 300px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    background: rgba(17, 23, 34, 0.86);
+    box-shadow: var(--shadow);
+}
+
+.thumbnail-section h3 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.thumbnail-section img {
+    max-width: 100%;
+    height: 200px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(17, 23, 34, 0.86);
+    box-shadow: var(--shadow);
+}
+
+.thumbnail-quality {
+    margin-top: 10px;
+}
+
+.video-info {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.download-section {
+    box-sizing: border-box;
+    width: 60%;
+    min-height: 300px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(17, 23, 34, 0.86);
+    box-shadow: var(--shadow);
+}
+
+@media (max-width: 767px) {
+    main {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .results-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    .thumbnail-section,
+    .download-section {
+        width: 100%;
+        height: auto;
+    }
+
+}
+
+.video-thumbnail {
+    width: min(420px, 100%);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.download-section {
+    gap: 12px;
+    padding: 24px;
+}
+
+.download-section select {
+    padding: 11px 14px;
+    font-size: 16px;
+    min-width: 180px;
+    color: var(--text-h);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+}
+
+.download-section select:focus {
+    border-color: var(--accent);
+}
+
+.download-button {
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 8px;
+    color: #071411;
+    background: var(--accent);
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.error-message {
+    color: #ff9d9d;
+    background: rgba(185, 56, 70, 0.14);
+    border: 1px solid rgba(255, 120, 120, 0.35);
+    border-radius: 8px;
+    margin: 16px auto;
+    padding: 10px 14px;
+    width: fit-content;
+    max-width: calc(100% - 48px);
+}
+
+.loading-indicator {
+    color: var(--accent-strong);
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.download-progress {
+    width: min(100% - 48px, 420px);
+    margin: 14px auto 0;
+}
+
+.progress-track {
+    height: 5px;
+    margin-top: 9px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+}
+
+.progress-bar {
+    position: relative;
+    height: 100%;
+    min-width: 4px;
+    overflow: hidden;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: width 700ms ease;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 42%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-120%);
+    animation: progress-glint 1.4s ease-in-out infinite;
+}
+
+@keyframes progress-glint {
+    to {
+        transform: translateX(260%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-bar::after {
+        animation: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .search-section {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 0 16px;
+    }
+
+    .search-section .get-video-button {
+        width: 100%;
+    }
+
+    .search-section .paste-button {
+        flex: 0 0 48px;
+        width: 48px;
+    }
+
+    .results-section {
+        width: calc(100% - 32px);
+        padding: 0;
+    }
+
+    .video-thumbnail {
+        width: 100%;
+    }
+
+    nav {
+        padding: 0 12px;
+    }
+}

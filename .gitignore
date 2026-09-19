@@ -12,3 +12,6 @@ dist/
 .env
 .env.*
 !.env.example
+config.json
+downloads/
+Backend/downloads/*

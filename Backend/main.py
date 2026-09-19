@@ -8,6 +8,7 @@ import re
 import socket
 import shutil
 import threading
+import tempfile
 import time
 import uuid
 from urllib.parse import urlsplit
@@ -16,9 +17,9 @@ import certifi
 
 
 def configure_curl_certificate():
-    """Keep curl-cffi's certificate path ASCII-safe on Windows."""
+    """Copy the CA bundle to a writable temporary path."""
     source = Path(certifi.where())
-    temp_folder = Path(os.environ.get("TEMP", "C:/Windows/Temp"))
+    temp_folder = Path(tempfile.gettempdir())
     target = temp_folder / "video_downloader_cacert.pem"
     if source != target and (
         not target.exists() or target.stat().st_size != source.stat().st_size
@@ -64,7 +65,12 @@ app.add_middleware(
 # Download folder
 # -----------------------------
 
-DOWNLOAD_FOLDER = Path(__file__).resolve().parent / "downloads"
+DOWNLOAD_FOLDER = Path(
+    os.environ.get(
+        "DOWNLOAD_DIR",
+        str(Path(tempfile.gettempdir()) / "video-downloader-downloads"),
+    )
+)
 DOWNLOAD_FOLDER.mkdir(exist_ok=True)
 
 MAX_DURATION_SECONDS = 60 * 60
@@ -109,6 +115,11 @@ rate_limiter = RateLimiter()
 download_executor = ThreadPoolExecutor(max_workers=DOWNLOAD_WORKERS)
 jobs = {}
 jobs_lock = threading.Lock()
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 
 def cleanup_abandoned_files():

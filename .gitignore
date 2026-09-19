@@ -1,0 +1,12 @@
+# Environment and secret configuration
+.env
+.env.*
+!.env.example
+config.json
+
+# Local Python environment
+Backend/env/
+
+# Generated downloads
+downloads/
+Backend/downloads/*

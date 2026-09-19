@@ -41,10 +41,8 @@ app = FastAPI()
 logger = logging.getLogger(__name__)
 
 
-# -----------------------------
-# Allow React to communicate
-# -----------------------------
 
+# Allow React to communicate
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -53,10 +51,7 @@ app.add_middleware(
 )
 
 
-# -----------------------------
 # Download folder
-# -----------------------------
-
 DOWNLOAD_FOLDER = Path("downloads")
 DOWNLOAD_FOLDER.mkdir(exist_ok=True)
 
@@ -152,10 +147,8 @@ def find_ffmpeg():
     return None
 
 
-# -----------------------------
-# Data we receive from React
-# -----------------------------
 
+# Data we receive from React
 class VideoRequest(BaseModel):
     url: HttpUrl
     resolution: int | None = Field(default=None, ge=144, le=4320)
@@ -227,10 +220,7 @@ def raise_download_error(error):
     raise HTTPException(status_code=400, detail=detail)
 
 
-# -----------------------------
 # Get video information
-# -----------------------------
-
 @app.post("/api/info")
 def get_video_info(request: Request, video_request: VideoRequest):
 
@@ -271,10 +261,8 @@ def get_video_info(request: Request, video_request: VideoRequest):
         raise_download_error(error)
 
 
-# -----------------------------
-# Download video
-# -----------------------------
 
+# Download video
 def download_video(url, filename, resolution):
 
     output_path = DOWNLOAD_FOLDER / filename
@@ -376,10 +364,7 @@ def run_download_job(job_id, url, resolution):
             })
 
 
-# -----------------------------
 # Download API
-# -----------------------------
-
 @app.post("/api/download")
 def download(request: Request, video_request: VideoRequest):
 
@@ -424,10 +409,8 @@ def get_download_status(job_id: str):
         return response
 
 
-# -----------------------------
-# Send file to user
-# -----------------------------
 
+# Send file to user
 @app.get("/api/file/{video_id}")
 def get_file(
     video_id: str,
@@ -458,10 +441,8 @@ def get_file(
     )
 
 
-# -----------------------------
-# Delete temporary file
-# -----------------------------
 
+# Delete temporary file
 def delete_file(file):
 
     try:

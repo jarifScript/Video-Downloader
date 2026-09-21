@@ -78,6 +78,12 @@ MAX_FILE_SIZE_MB = int(os.environ.get("MAX_FILE_SIZE_MB", "512"))
 MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 DOWNLOAD_TIMEOUT_SECONDS = 30
 ABANDONED_FILE_AGE_SECONDS = 60 * 60
+COOKIE_FILE_PATH = os.environ.get("COOKIES_FILE_PATH")
+COOKIE_FILE = (
+    COOKIE_FILE_PATH
+    if COOKIE_FILE_PATH and os.path.exists(COOKIE_FILE_PATH)
+    else None
+)
 JOB_RETENTION_SECONDS = 60 * 60
 DOWNLOAD_WORKERS = 2
 YOUTUBE_PO_TOKEN = os.environ.get("YOUTUBE_PO_TOKEN")
@@ -190,6 +196,10 @@ def get_extractor_args():
     }
 
 
+def get_runtime_options():
+    return {"js_runtimes": {"node": {}}}
+
+
 def validate_request(request: Request, video_request: VideoRequest, action: str):
     client_ip = request.client.host if request.client else "unknown"
     parsed_url = urlsplit(str(video_request.url))
@@ -262,6 +272,8 @@ def get_video_info(request: Request, video_request: VideoRequest):
             "skip_download": True,
             "socket_timeout": DOWNLOAD_TIMEOUT_SECONDS,
             "extractor_args": get_extractor_args(),
+            **get_runtime_options(),
+            "cookiefile": COOKIE_FILE,
             "match_filter": lambda info, *, incomplete: (
                 "This video exceeds the one-hour duration limit."
                 if info.get("duration") and info["duration"] > MAX_DURATION_SECONDS
@@ -336,6 +348,8 @@ def download_video(url, filename, resolution):
         "no_warnings": True,
         "socket_timeout": DOWNLOAD_TIMEOUT_SECONDS,
         "extractor_args": get_extractor_args(),
+        **get_runtime_options(),
+        "cookiefile": COOKIE_FILE,
         "retries": 2,
         "fragment_retries": 2,
         "max_filesize": MAX_FILE_SIZE,

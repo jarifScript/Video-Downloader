@@ -244,7 +244,12 @@ def validate_video_id(video_id: str):
 def raise_download_error(error):
     logger.exception("Downloader request failed: %s", error)
     error_message = str(error).lower()
-    if "unexpected response from webpage request" in error_message:
+    if "failed to extract any player response" in error_message:
+        detail = (
+            "YouTube blocked this server request. Configure a valid YOUTUBE_PO_TOKEN "
+            "in Render and redeploy, or try another public video."
+        )
+    elif "unexpected response from webpage request" in error_message:
         detail = "TikTok blocked this request. Try again later or use a publicly viewable video."
     elif "private video" in error_message:
         detail = "This video is private and cannot be downloaded."
